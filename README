@@ -4,6 +4,10 @@ Credits: http://www.felipemarques.com.br/2011/12/07/usando-frapi-video-demo-sem-
 
 The original repository is at: http://getfrapi.com and https://github.com/frapi/frapi
 
+Follow these urls to open interfaces:
+- Admin: PATH_TO_FRAPI_WITHOUT_VHOST/admin/public/ (original: admin.frapi)
+- API: PATH_TO_FRAPI_WITHOUT_VHOST/public/ (original: api.frapi)
+
 Enjoy!
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -13,6 +17,10 @@ Importante: Esta é uma versão alterada do Frapi, feita para ser usada sem conf
 Créditos: http://www.felipemarques.com.br/2011/12/07/usando-frapi-video-demo-sem-configurar-virtualhost/
 
 O repositório original fica em: http://getfrapi.com e https://github.com/frapi/frapi
+
+Use essas urls para abrir as interfaces:
+- Admin: PATH_TO_FRAPI_WITHOUT_VHOST/admin/public/ (original: admin.frapi)
+- API: PATH_TO_FRAPI_WITHOUT_VHOST/public/ (original: api.frapi)
 
 Divirta-se!
 ===========================
