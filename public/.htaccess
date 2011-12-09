@@ -1,0 +1,7 @@
+<Files ~ "\.xml$">
+Order allow,deny
+Allow from all
+</Files>
+
+RewriteEngine On
+RewriteRule ^.*$ index.php [QSA,NC,L]

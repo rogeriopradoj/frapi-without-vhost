@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frapi-config>
+ <errors>
+  <error>
+   <name>NO_PUT</name>
+   <message>This method is not accepted for this API call.</message>
+   <http_code>405</http_code>
+   <description>This error is returned whenever someone tries to execute a PUT request on a collection or a resource that prevents PUT requests.</description>
+   <hash>a54734a568823346dfb86fd77d8497dd67076adc</hash>
+  </error>
+  <error>
+   <name>NO_POST</name>
+   <message>POST calls are not accepted for this request.</message>
+   <http_code>405</http_code>
+   <description>This error is returned whenever a collection or a resource prevents the use of the POST method.</description>
+   <hash>d252bf7363a7431dd0cdd4fb5454dcb80901e429</hash>
+  </error>
+ </errors>
+</frapi-config>

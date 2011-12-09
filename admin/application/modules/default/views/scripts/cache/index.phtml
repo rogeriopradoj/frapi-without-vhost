@@ -1,0 +1,34 @@
+<p><?php echo $this->tr->_('CACHE_HELP_ONE'); ?></p>
+<p><?php echo $this->tr->_('CACHE_HELP_TWO'); ?></p>
+
+<table id="list">
+    <tr>
+        <th><?php echo $this->tr->_('KEY'); ?></th>
+        <th><?php echo $this->tr->_('SET'); ?></th>
+        <th><?php echo $this->tr->_('SIZE'); ?></th>
+        <th><?php echo $this->tr->_('DELETE'); ?></th>
+    </tr>
+    <?php
+    foreach ($this->profile as $k=>$p) {
+        $style = (($p['set'])?('background-color:#DDFFDD'):('background-color:#FFDDDD'));
+        ?>
+        <tr>
+            <td style="<?php echo $style ?>"><a href="<?php echo URL_BASE; ?>/cache/detail/key/<?php echo $k ?>" title="<?php echo $this->tr->_('DETAIL'); ?>"><?php echo $k ?></a></td>
+            <td style="<?php echo $style ?>"><?php echo (($p['set'])?('yes'):('<strong>NO</strong>')) ?></td>
+            <td style="<?php echo $style ?>"><?php echo $p['size'] ?></td>
+            <td style="<?php echo $style ?>">
+            <?php if($p['set']): ?>
+                <a href="<?php echo URL_BASE; ?>/cache/unset/key/<?php echo $k ?>" 
+                   title="<?php echo $this->tr->_('DELETE'); ?>"><?php echo $this->tr->_('DELETE'); ?></a>
+            <?php else: ?>
+                N/A<?php endif ?>
+            </td>
+        </tr>
+        <?php
+    }
+    ?>
+
+</table>
+
+<br />
+<p><?php echo $this->tr->_('YOU_CAN'); ?> <a href="<?php echo URL_BASE; ?>/cache/unsetall" title="<?php echo $this->tr->_('UNSET_ALL_CACHE_KEYS'); ?>"><?php echo $this->tr->_('UNSET_ALL_KEYS'); ?></a> <?php echo $this->tr->_('TO_CLEAR_CACHE'); ?>.</p>

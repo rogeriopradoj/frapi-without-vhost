@@ -1,0 +1,30 @@
+<?php
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$this->menuItem = $request->getRequestUri();
+$this->menuItem = str_replace(URL_BASE,'',$this->menuItem);
+
+$string = substr($this->menuItem, 1);
+$pos    = strpos($string, '/');
+$lpos   = strpos($string, '/');
+if ($pos !== false && $pos === $lpos) {
+    $data = explode('/', $string);
+    if (count($data) > 2) {
+        $this->menuItem = '/' . $data[0] . '/' . $data[1];
+        $item = '/' . $data[0];
+    } else {
+        $item = '/' . substr($string, 0, $lpos);
+    }
+} else {
+    $item = '/' . $string;
+}
+
+?>	
+    <div class="navigation">
+        <a <?php echo $item == '/' ? ' class="active"' : '' ?> href="<?php echo URL_BASE; ?>/"><?php echo $this->tr->_('DASHBOARD'); ?></a>
+        <a <?php echo $item == '/action' ? ' class="active"' : '' ?> href="<?php echo URL_BASE; ?>/action"><?php echo $this->tr->_('ACTIONS'); ?></a>
+        <a <?php echo $item == '/errors' ? ' class="active"' : '' ?> href="<?php echo URL_BASE; ?>/errors"><?php echo $this->tr->_('ERRORS'); ?></a>
+        <a <?php echo $item == '/partners' ? ' class="active"' : '' ?> href="<?php echo URL_BASE; ?>/partners"><?php echo $this->tr->_('PARTNERS'); ?></a>
+        <a <?php echo $item == '/configuration' ? ' class="active"' : '' ?> href="<?php echo URL_BASE; ?>/configuration"><?php echo $this->tr->_('CONFIGURATION'); ?></a>
+        <a <?php echo $item == '/tester' ? ' class="active"' : '' ?> href="<?php echo URL_BASE; ?>/tester"><?php echo $this->tr->_('TESTER'); ?></a>
+		<div class="clearer"><span></span></div>
+    </div>

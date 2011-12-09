@@ -1,0 +1,72 @@
+<div style="float: left"><form id="filter-form"><?php echo $this->tr->_('FILTER'); ?>: <input name="filter" id="filter" value="" maxlength="30" size="30" type="text"></form></div>
+<br /><br /><br /><br /><br />
+
+    <table id="list">
+     <thead>
+      <tr>
+        <th><?php echo $this->tr->_('NAME'); ?></th>
+        <th><?php echo $this->tr->_('VISIBILITY'); ?></th>
+        <th><?php echo $this->tr->_('ENABLED'); ?></th>
+        <th><?php echo $this->tr->_('ACTION'); ?></th>
+      </tr>
+     </thead>
+     <tbody>
+<?php foreach ($this->data as $key => $d) : if (is_array($d) && !empty($d)) : ?>
+      <tr><?php echo $this->tr->_(''); ?>
+        <td><?php echo $d['name']; ?></td>
+        <?php 
+            $visibility = ($d['public'] == '1' || $d['public'] === null) ? 
+                $this->tr->_('PUBLIC') : $this->tr->_('PRIVATE'); 
+        ?>
+        <td class="visibility"><?php echo $visibility; ?></td>
+        <?php
+            if ($d['enabled'] == '1') {
+                $enabled = $this->tr->_('YES');
+                $class   = 'enabled';
+            } else {
+                $enabled = $this->tr->_('NO');
+                $class   = 'disabled';
+            }
+        ?>
+        <td class="<?php echo $class; ?>"><?php echo $enabled; ?></td>
+        <td style="text-align: center;">
+            <a href="<?php echo URL_BASE; ?>/action/edit/id/<?php echo $d['hash']; ?>"><?php echo $this->tr->_('EDIT'); ?></a> |
+            <a href="<?php echo URL_BASE; ?>/action/code/id/<?php echo $d['hash']; ?>"><?php echo $this->tr->_('CODE'); ?></a> |
+            <?php
+                if ($d['enabled'] == '1') {
+//                    echo '<a href="#">Disable</a>';
+                } else {
+//                    echo '<a href="#">Enable</a>';
+                }
+            ?>
+            <a href="<?php echo URL_BASE; ?>/action/delete/id/<?php echo $d['hash']; ?>" onclick="return confirm('<?php echo $this->tr->_('ACTION_CONFIRM_DELETE'); ?>');"><?php echo $this->tr->_('DELETE'); ?></a>
+        </td>
+      </tr>
+<?php endif; endforeach; ?>
+     </tbody>
+    </table>
+
+
+<script type="text/javascript">
+$(function() {
+    var t = $('table#list')
+    t.tablesorter({
+        sortList:[[0,0]],
+        widgets: ['zebra'],
+        dateFormat: 'dd.mm.yyyy',
+        headers: {
+            3: { sorter: false }
+        }
+    });
+
+
+  $("#filter").keyup(function() {
+    $.uiTableFilter(t, this.value);
+  })
+
+  $('#filter-form').submit(function(){
+    t.find("tbody > tr:visible > td:eq(1)").mousedown();
+    return false;
+  }).focus(); //Give focus to input field
+});
+</script>

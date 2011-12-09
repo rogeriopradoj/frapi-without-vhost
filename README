@@ -1,0 +1,82 @@
+english - en
+Important: This is a changed version of Frapi, made for using without vhost configuration.
+Credits: http://www.felipemarques.com.br/2011/12/07/usando-frapi-video-demo-sem-configurar-virtualhost/
+
+The original repository is at: http://getfrapi.com and https://github.com/frapi/frapi
+
+Enjoy!
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Brazilian portuguese - pt_BR
+
+Importante: Esta é uma versão alterada do Frapi, feita para ser usada sem configuração de vhost.
+Créditos: http://www.felipemarques.com.br/2011/12/07/usando-frapi-video-demo-sem-configurar-virtualhost/
+
+O repositório original fica em: http://getfrapi.com e https://github.com/frapi/frapi
+
+Divirta-se!
+===========================
+
+Requirements
+===========================
+PHP: Version 5.2.4 and above
+Caching:
+  APC: Required for caching, specifically for From_Database_Error::code, ::msg
+  WinCache: Required for a more stable caching on Windows
+
+Redis
+=====
+
+In order to use the Redis cache adapter, you will have to install the phpredis package from owlient (http://github.com/owlient/phpredis)
+
+APC Keys
+===========================
+A number of APC keys are in use across the application.
+These are often stored on the frontend, and deleted on the backend
+when actions, errors or routes are updated.
+"Actions.enabled-public"    = Enabled, public actions as list.
+"Actions.enabled-private"   = Enabled, private actions as list.
+"Errors.user-defined"       = List of developer-defined errors in admin.
+"Internal.database-dsn"     = DSN, username, and password for admin (SQLite) database.
+"Output.default-format"     = Stores the default output format set in admin. E.g., "xml", "json", "php"...
+"Partners.emails-keys"      = Stores array of partnerEmail=>partnerKey for lookups.
+"Router.routes-prepared"    = Prepared array of routes keyed by first path segment.
+
+
+File System Operations
+===========================
+chmod -R 777 custom
+
+Pretty URL and easy access:
+===========================
+Add this to your .htaccess
+    RewriteEngine On
+    SetEnv THE_MACHINE local
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule /([a-zA-Z]+)\.([a-z]+)? /index.php?action=$1&format=$2 [QSA,L]
+    RewriteRule /([a-zA-Z]+)(\.*)? /index.php?action=$1 [QSA,L]
+
+
+Vhost configuration Apache2
+===========================
+# http://local.api.echolibre.com
+<VirtualHost *:80>
+    DocumentRoot YOUR_PATH/public
+    ServerName local.api.echolibre.com
+    ServerAdmin root@localhost.com
+
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule /([a-zA-Z]+)\.([a-z]+)? /index.php?action=$1&format=$2 [QSA,L]
+    RewriteRule /([a-zA-Z]+)(\.*)? /index.php?action=$1 [QSA,L]
+</VirtualHost>
+
+
+# http://local.admin.api.echolibre.com
+<VirtualHost *:80>
+    DocumentRoot YOUR_PATH/admin/public
+    ServerName local.admin.api.echolibre.com
+    ServerAdmin root@localhost.com
+</VirtualHost>

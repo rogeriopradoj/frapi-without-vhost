@@ -1,0 +1,60 @@
+<?php
+echo $this->form;
+?>
+
+<div class="field-block">
+<?php echo $this->formSubmit('submit', $this->tr->_('SAVE')); ?>
+</div>
+
+<br /><br />
+<a id="add-param"><?php echo $this->tr->_('ADD_PARAMETER'); ?><a>
+<br /><br />
+<table id="params">
+    <tr>
+        <th style="width: 300px;"><?php echo $this->tr->_('PARAMETER'); ?></th>
+        <th><?php echo $this->tr->_('REQUIRED'); ?> ?</th>
+        <th><?php echo $this->tr->_('ACTION'); ?></th>
+    </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var i = 1;
+    $('#add-param').click(function () {
+        var html = '<tr><td><input type="text" name="param[' + i + ']" value="" style="width: 90%;" /></td>';
+        html = html + '<td style="text-align: center;"><input type="checkbox" name="required[' + i + ']"></td>';
+        html = html + '<td><a class="delete-button" href="javascript:void(0);"><?php echo $this->tr->_('DELETE'); ?></a></td></tr>';
+
+        $('#params').append(html);
+        deleteButton();
+        i++;
+    });
+
+    if ($('#route').val() == '') {
+        $('#route').val('/custom/route/:var');
+    }
+
+    $('#route').focus(function() { 
+        if ($('#route').val() == '/custom/route/:var') {
+            $(this).val(''); 
+        }
+    });
+
+    $('#route').blur(function() { 
+        if ($(this).val() == '') { 
+            $(this).val('/custom/route/:var')
+        }
+    });
+
+    function deleteButton()
+    {
+        $('a.delete-button').click(function () {
+            $(this).parent().parent().remove();
+        });
+    }
+
+    deleteButton();
+});
+</script>

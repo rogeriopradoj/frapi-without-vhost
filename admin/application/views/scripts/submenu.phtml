@@ -1,0 +1,44 @@
+<?php
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$this->menuItem = $request->getRequestUri();
+$this->menuItem = str_replace(URL_BASE,'',$this->menuItem);
+
+$string = substr($this->menuItem, 1);
+$pos    = strpos($string, '/');
+$lpos   = strpos($string, '/');
+if ($pos !== false && $pos === $lpos) {
+    $data = explode('/', $string);
+    if (count($data) > 2) {
+        // This has to be fixed. Too restrictive to one level of hierarchy
+        $this->menuItem = '/' . $data[0] . '/' . $data[1];
+        $item = '/' . $data[0];
+    } else {
+        $item = '/' . substr($string, 0, $lpos);
+    }
+} else {
+    $item = '/' . $string;
+}
+
+
+?>	
+
+    <?php if ($this->menuItem != '/action/code') : ?>
+	<div class="sidenav">
+		<h2><?php echo $this->tr->_('SUBMENU'); ?></h2>
+    <?php if (in_array($item, array('/configuration', '/database', '/cache', '/output', '/user'))) { ?>
+        <li<?php echo $item == '/cache' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/cache"><?php echo $this->tr->_('CACHE'); ?></a></li>
+      <li<?php echo $item == '/user' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/user"><?php echo $this->tr->_('USERS'); ?></a></li>
+      <li<?php echo $item == '/output' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/output"><?php echo $this->tr->_('OUTPUT'); ?></a></li>
+      <li<?php echo $item == '/database' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/database"><?php echo $this->tr->_('DATABASE'); ?></a></li>
+    <?php } elseif ($item == '/user') { ?>
+        <li<?php echo $item == '/user/add' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/user/add"><?php echo $this->tr->_('ADD_NEW_USER'); ?></a></li>
+    <?php } elseif ($item == '/partners') { ?>
+        <li<?php echo $item == '/partners/add' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/partners/add"><?php echo $this->tr->_('ADD_NEW_PARTNER'); ?></a></li>
+    <?php } elseif ($item == '/errors') { ?>
+        <li<?php echo $item == '/errors/add' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/errors/add"><?php echo $this->tr->_('ADD_NEW_ERROR'); ?></a></li>
+    <?php } elseif ($item == '/action') { ?>
+        <li<?php echo $item == '/action/add' ? ' class="active"' : '' ?>><a href="<?php echo URL_BASE; ?>/action/add"><?php echo $this->tr->_('ADD_NEW_ACTION'); ?></a></li>
+    <?php } ?>
+	</div>
+    <?php endif; ?>
+    <div class="sidenav" style="display: none; visibility: hidden;"></div>

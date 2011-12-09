@@ -1,0 +1,58 @@
+
+<div style="float: left">
+    <form id="sync-form" method="post" action="<?php echo URL_BASE; ?>/output/sync">
+        <input name="sync" id="sync" 
+               value="<?php echo $this->tr->_('SYNC_OUTPUT_TYPES'); ?>" 
+               type="submit" />
+    </form>
+</div>
+<br /><br /><br /><br /><br />
+
+    <table id="list">
+     <thead>
+      <tr>
+        <th><?php echo $this->tr->_('TYPE'); ?></th>
+        <th><?php echo $this->tr->_('ACTION'); ?></th>
+      </tr>
+     </thead>
+     <tbody>
+<?php foreach ($this->data as $d)  : if (is_array($d) && !empty($d)) :?>
+      <tr>
+        <td style="text-align: center;"><?php echo $d['name']; ?></td>
+        <td style="text-align: center;">
+            <?php if ($d['default'] != '1' && $d['enabled'] == '1') { ?>
+            <a href="<?php echo URL_BASE; ?>/output/makedefault/id/<?php echo $d['name']; ?>">
+              <?php echo $this->tr->_('MAKE_DEFAULT'); ?>
+            </a> |
+            <?php
+            }
+
+            if ($d['default'] == '1') {
+                echo $this->tr->_('DEFAULT_OUTPUT') . ' | ';
+            }
+
+            if ($d['enabled'] == '1') {
+            ?>
+            <a href="<?php echo URL_BASE; ?>/output/disable/id/<?php echo $d['name']; ?>"><?php echo $this->tr->_('DISABLE'); ?></a>
+            <?php } else { ?>
+            <a href="<?php echo URL_BASE; ?>/output/enable/id/<?php echo $d['name']; ?>"><?php echo $this->tr->_('ENABLE'); ?></a>
+            <?php } ?>
+        </td>
+      </tr>
+<?php endif; endforeach; ?>
+     </tbody>
+    </table>
+
+<script type="text/javascript">
+$(function() {
+    var t = $('table#list')
+    t.tablesorter({
+        sortList:[[0,0]],
+        widgets: ['zebra'],
+        dateFormat: 'dd.mm.yyyy',
+        headers: {
+            1: { sorter: false }
+        }
+    });
+});
+</script>

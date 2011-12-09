@@ -1,0 +1,29 @@
+<?php
+// Determine our max field widths so we can pad things out appropriately
+$action_name_max_length  = strlen($this->tr->_('NAME') . ' ');
+$action_route_max_length = strlen($this->tr->_('ROUTE') . ' ');
+
+if ($this->actions) {
+    foreach ($this->actions as $key => $action) {
+
+        if (strlen($action['name']) > $action_name_max_length) {
+            $action_name_max_length = strlen($action['name']) + 1;
+        }
+
+        if (strlen($action['route']) > $action_route_max_length) {
+            $action_route_max_length = strlen($action['route']) + 1;
+        }
+    }
+}
+
+echo  str_pad($this->tr->_('NAME'), $action_name_max_length) . $this->tr->_('ENABLED') . ' ' . $this->tr->_('PUBLIC') . ' '
+    . str_pad($this->tr->_('ROUTE'), $action_route_max_length) . PHP_EOL;
+
+if ($this->actions) {
+    foreach ($this->actions as $key => $action) {
+        echo str_pad($action['name'], $action_name_max_length) .
+            str_pad($action['enabled'], strlen('Enabled ')) .
+            str_pad($action['public'], strlen('Public')) .
+            str_pad($action['route'], $action_route_max_length) . PHP_EOL;
+    }
+}
